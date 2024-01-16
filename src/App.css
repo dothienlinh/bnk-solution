@@ -1,38 +1,36 @@
-.App {
-  text-align: center;
+@tailwind base;
+@tailwind components;
+
+@font-face {
+  font-family: CenturyGothic;
+  src: url('./assets/fonts/SVN-CenturyGothic-Regular.ttf');
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: CenturyGothic Bold;
+  src: url('./assets/fonts/SVN-CenturyGothic-Bold.ttf');
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+@layer base {
+  body {
+    @apply font-centuryGothic;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@layer components {
+  .header {
+    @apply h-[120px] bg-white w-full fixed top-0 transition duration-500 ease-in-out;
   }
-  to {
-    transform: rotate(360deg);
+
+  .scrollUp {
+    @apply translate-y-[0];
+  }
+
+  .scrollDown {
+    @apply translate-y-[-120px];
+  }
+
+  .menu-child {
+    @apply bg-[#262525bf] absolute w-[280px] top-[72px] left-[-20px] font-centuryGothic after:bg-hero-pattern after:w-[115px] after:h-[6px] after:inline-block after:absolute after:top-[-6px];
   }
 }
