@@ -8,9 +8,13 @@ function Header() {
   const [language, setLanguage] = useState('EN')
   const [openMenuLanguage, setOpenMenuLanguage] = useState(false)
 
-  const menuLanguage = useRef()
-  const btnLanguage = useRef()
+  const menuLanguageRef = useRef()
+  const btnLanguageRef = useRef()
   const headerRef = useRef()
+
+  const toggleBtn = () => {
+    setOpenMenuLanguage(!openMenuLanguage)
+  }
 
   useEffect(() => {
     let prevScroll = 0
@@ -37,18 +41,17 @@ function Header() {
 
   useEffect(() => {
     const handler = (event) => {
-      if (event.target === btnLanguage.current) {
-        setOpenMenuLanguage(!openMenuLanguage)
-      } else if (
-        openMenuLanguage &&
-        !menuLanguage.current.contains(event.target)
-      ) {
-        setOpenMenuLanguage(false)
+      if (!btnLanguageRef.current.contains(event.target)) {
+        toggleBtn()
       }
     }
 
-    window.addEventListener('click', handler)
+    if (openMenuLanguage) {
+      window.addEventListener('click', handler)
+    }
+
     return () => window.removeEventListener('click', handler)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [openMenuLanguage])
 
   return (
@@ -66,7 +69,8 @@ function Header() {
             className={`font-normal text-[#333] flex items-center justify-center gap-1 px-3 py-[6px] border border-[#333] rounded opacity-50 transition duration-300 hover:bg-[#5a6268] hover:border-[#5a6268] hover:text-white ${
               openMenuLanguage ? 'bg-[#5a6268] border-[#5a6268] text-white' : ''
             }`}
-            ref={btnLanguage}
+            ref={btnLanguageRef}
+            onClick={toggleBtn}
           >
             {language}
             <IoMdArrowDropdown />
@@ -74,7 +78,7 @@ function Header() {
           {openMenuLanguage && (
             <div
               className="absolute top-10 right-[-30px] py-2 bg-white min-w-40 border border-[#00000026] rounded"
-              ref={menuLanguage}
+              ref={menuLanguageRef}
             >
               <p
                 className="px-6 py-1 hover:text-[#16181b] hover:bg-[#f8f9fa] cursor-pointer"
